@@ -8,7 +8,9 @@
 #include <windows.h>
 
 
-#define DATASIZE 10
+#define DATASIZE 10	//data height/ display size
+#define GREFRESH 1  //global refresh rate
+#define CREFRESH 3 	//chart refresh rate
 
 
 using namespace std;
@@ -18,6 +20,7 @@ int avg_temp, avg_moist, avg_pres;
 char chartdata [DATASIZE][DATASIZE];
 const char block = 219;
 
+//print current temp, humidiry and pressure
 void get_current_stats(){
 	
 	cout<<"| Temperatura | Humedad | Presion |"<<endl;
@@ -36,6 +39,8 @@ void get_current_stats(){
 	cout.width(4);
 	cout<<"|";
 }
+
+//set column height value
 void set_column_height(int col, int key){
 	for (int i=0; i<DATASIZE; i++){
 		chartdata[i][key]=0;
@@ -44,6 +49,8 @@ void set_column_height(int col, int key){
 		chartdata[i][key]=block;
 	}
 }
+
+
 void get_graph(int time, int value){
 	set_column_height(value/100, time%DATASIZE);
 	
@@ -70,9 +77,9 @@ int main(int argc, char* argv[]) {
     cout<<"Datos Actuales :"<<endl;
 	get_current_stats();
 	cout<<"\nDatos Historicos:"<<endl;
-	
+	//print graph
 	get_graph(i, rand() % 1000 + 1);
-	Sleep(1000);
+	Sleep(GREFRESH*1000);
     system("cls");
     //cout << p << endl;
     
