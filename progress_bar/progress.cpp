@@ -3,47 +3,83 @@
 #include <cstdlib>
 #include <unistd.h>
 
+//dev added
+#include <stdlib.h>
+#include <windows.h>
+
+
+#define DATASIZE 10
+
+
 using namespace std;
 
+int time_ticks = 0;
+int avg_temp, avg_moist, avg_pres;
+char chartdata [DATASIZE][DATASIZE];
+const char block = 219;
 
-// function prototype
-void progress( int percent );
+void get_current_stats(){
+	
+	cout<<"| Temperatura | Humedad | Presion |"<<endl;
+	int temperature = rand() % 1000 + 1;
+	cout<<"|";
+	cout.width(8);
+    cout<< temperature;//todo: get temperatura
+    cout.width(6);
+	cout<<"|";
+	cout.width(6);
+	cout<< rand() % 30 + 1;//todo: get humedad
+	cout.width(4);
+	cout<<"|";
+	cout.width(6);
+	cout<< rand() % 50 + 1;//todo: get presion
+	cout.width(4);
+	cout<<"|";
+}
+void set_column_height(int col, int key){
+	for (int i=0; i<DATASIZE; i++){
+		chartdata[i][key]=0;
+	}
+	for (int i=DATASIZE-col; i<DATASIZE; i++){
+		chartdata[i][key]=block;
+	}
+}
+void get_graph(int time, int value){
+	set_column_height(value/100, time%DATASIZE);
+	
+	for(int i=0; i<DATASIZE; i++){
+		for(int j=0; j<DATASIZE; j++){
+		cout<<chartdata[i][j]<<" ";
+		}
+		cout<<"\n";
+	}
+}
 
-// main code
 int main(int argc, char* argv[]) {
+	//set array to 0
+	for(int i=0; i< DATASIZE; i++){
+		for(int j=0; j<DATASIZE; j++){
+			chartdata[i][j]=0;
+		}
+	}
 
   int N = 100;
 	
   for(int i = 0; i < N; i++) {
     // compute percentage
-    float p = (i / (float) N) * (float) 100;
-    progress(p);
+    cout<<"Datos Actuales :"<<endl;
+	get_current_stats();
+	cout<<"\nDatos Historicos:"<<endl;
+	
+	get_graph(i, rand() % 1000 + 1);
+	Sleep(1000);
+    system("cls");
     //cout << p << endl;
-    usleep(20000);
+    
   }
-
-  progress(100);
-  cout << endl;
 
   return 0;
 }
 
 // print progress
-void progress( int percent ){
-  string bar;
 
-  for(int i=0; i<50; i++){
-
-    if( i<(percent/2) ){
-      bar.replace(i,1,"|");
-    }
-   else{
-      bar.replace(i,1," ");
-    }
-
-  }
-
-  cout<< "\r"<< bar<<" ";
-  cout.width( 3 );
-  cout<< percent << " %     " << std::flush;
-}
