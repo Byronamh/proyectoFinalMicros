@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define DATASIZE 10	//data height/ display size
+#define DATASIZE 30	//data height/ display size
 #define GRAPHWIDTH 20	//data height/ display size
 #define GREFRESH 1  //global refresh rate
 #define CREFRESH 3 	//chart refresh rate
@@ -60,6 +60,7 @@ void get_graph(int time, int value){
 		}
 		cout<<"\n";
 	}
+
 }
 
 int main(int argc, char* argv[]) {
@@ -78,9 +79,7 @@ int main(int argc, char* argv[]) {
 	get_current_stats();
 	cout<<"\nDatos Historicos:"<<endl;
 	//print graph
-	if(i%CREFRESH){
-		get_graph(i, rand() % 1000 + 1);
-	}
+	get_graph(i, rand()%1000+1);
 	sleep(GREFRESH);
     system("clear");
     //cout << p << endl;
