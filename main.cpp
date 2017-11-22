@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
 
 	//print graph
 
-	get_graph(i, getTemperatura()%1000+1);
+	get_graph(i, floor(getTemperatura())%1000+1);
 
 	sleep(GREFRESH);
 
