@@ -95,15 +95,14 @@ void get_current_stats(){
 void set_column_height(int col, int key){
 
 	for (int i=0; i<DATASIZE; i++){
-
 		chartdata[i][key]='.';
-
 	}
 
 	for (int i=DATASIZE-col; i<DATASIZE; i++){
-
 		chartdata[i][key]=block;
-
+	}
+	for (int i=0; i<DATASIZE; i++){
+		chartdata[0][i]=GRAPHSTEP*i;
 	}
 
 }
@@ -113,8 +112,8 @@ void set_column_height(int col, int key){
 
 
 void get_graph(int time, int value){
-	cout<<value;
-	set_column_height(value/GRAPHSTEP, time%DATASIZE);
+	set_column_height(GRAPHSTEP,0);
+	set_column_height(value/GRAPHSTEP, time%DATASIZE+1);
 
 	
 
@@ -154,7 +153,7 @@ int main(int argc, char* argv[]) {
 
 	
 
-  for(int i = 0; i < N; i++) {
+  while(true){
 
     // compute percentage
 
