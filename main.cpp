@@ -63,7 +63,7 @@ void get_current_stats(){
 
 	cout.width(8);
 
-    cout<< getTemperatura();//todo: get temperatura
+    cout<< getTemperatura();
 
     cout.width(6);
 
@@ -71,7 +71,7 @@ void get_current_stats(){
 
 	cout.width(6);
 
-	cout<< rand() % 30 + 1;//todo: get humedad
+	cout<< getHumedad();
 
 	cout.width(4);
 
@@ -79,7 +79,7 @@ void get_current_stats(){
 
 	cout.width(6);
 
-	cout<< rand() % 50 + 1;//todo: get presion
+	cout<< getPresion();
 
 	cout.width(4);
 
@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
 
 	//print graph
 
-	get_graph(i, rand()%1000+1);
+	get_graph(i, getTemperatura()%1000+1);
 
 	sleep(GREFRESH);
 
