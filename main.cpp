@@ -1,3 +1,15 @@
+//Universidad del Valle de Guatemala
+//Programaci'on de microprocesadores
+//Proyecto final
+//------------------------
+//Ana Lucia Diaz Leppe
+//Byron Mota Hernandez
+//
+//------------------------------------------------------------------------------------------------
+//|  compilar con: g++ main.cpp bme280.cpp bme280.h sensores.cpp sensores.h -lwiringPi -o main   |
+//|  ejecutar con ./main                                                                         |
+//------------------------------------------------------------------------------------------------
+
 #include <string>
 
 #include <iostream>
@@ -20,7 +32,7 @@
 
 #define GRAPHWIDTH 20	//data width/ display size
 
-#define GRAPHSTEP 5 //yaxis data scale
+#define GRAPHSTEP 3 //yaxis data scale
 
 #define GREFRESH 1  //global refresh rate
 
@@ -34,13 +46,7 @@ float pres = 0;
 
 pthread_mutex_t lock;
 
-
-
-
-
 using namespace std;
-
-
 
 int time_ticks = 0;
 
@@ -49,7 +55,6 @@ int avg_temp, avg_moist, avg_pres;
 char chartdata [GRAPHWIDTH][DATASIZE];
 
 const char block = 'x';
-
 
 
 //print current temp, humidiry and pressure
@@ -61,31 +66,18 @@ void get_current_stats(){
 	cout<<"| Temperatura | Humedad | Presion |"<<endl;
 
 	cout<<"|";
-
 	cout.width(8);
-
-    cout<< getTemperatura();
-
-    cout.width(6);
-
-	cout<<"|";
-
+	cout<< getTemperatura();
 	cout.width(6);
-
+	cout<<"|";
+	cout.width(6);
 	cout<< getHumedad();
-
 	cout.width(4);
-
 	cout<<"|";
-
 	cout.width(6);
-
 	cout<< getPresion();
-
 	cout.width(5);
-
 	cout<<"|";
-
 }
 
 
