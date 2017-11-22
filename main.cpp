@@ -1,7 +1,7 @@
 // Universidad del Valle de Guatemala
 // CC3056
 // Christian Medina
-
+// Ana lucia Diaz y Byron Mota
 // compile with:
 // g++ main.cpp bme280.cpp bme280.h -lwiringPi -o bme280
 
@@ -14,11 +14,25 @@
 #include <math.h>
 #include <wiringPiI2C.h>
 #include "bme280.h"
+#include <pthread.h>
+#include "sensor.h"
+#include <unistd.h>
+#include <curses.h>
+#include <stdlib.h>
+#include <ctype.h>
 
-using namespace std;
+char* intprkey(int ch);
+void *thread_function_statuts(void*);
+void *thread_function_print(void*)
+#define SLEEPTIME 1
+  
+  bool end = false;
+  float temperatura = 0;
+  float humedad = 0;
+  float presion =0;
+  pthread_mutex_t lock;
 
 int main(int argv, char* argc[]){
-
   int fd = wiringPiI2CSetup(BME280_ADDRESS);
   
   if(fd < 0){
