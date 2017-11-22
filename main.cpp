@@ -101,9 +101,6 @@ void set_column_height(int col, int key){
 	for (int i=DATASIZE-col; i<DATASIZE; i++){
 		chartdata[i][key]=block;
 	}
-	for (int i=0; i<DATASIZE; i++){
-		chartdata[0][i]=GRAPHSTEP*i;
-	}
 
 }
 
