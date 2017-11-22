@@ -5,8 +5,7 @@
 
 //dev added
 #include <stdlib.h>
-#include <windows.h>
-
+#include <unistd.h>
 
 #define DATASIZE 10	//data height/ display size
 #define GREFRESH 1  //global refresh rate
@@ -17,8 +16,8 @@ using namespace std;
 
 int time_ticks = 0;
 int avg_temp, avg_moist, avg_pres;
-char chartdata [DATASIZE][DATASIZE];
-const char block = 219;
+char chartdata [20][DATASIZE];
+const char block = 'x';
 
 //print current temp, humidiry and pressure
 void get_current_stats(){
@@ -79,8 +78,8 @@ int main(int argc, char* argv[]) {
 	cout<<"\nDatos Historicos:"<<endl;
 	//print graph
 	get_graph(i, rand() % 1000 + 1);
-	Sleep(GREFRESH*1000);
-    system("cls");
+	sleep(GREFRESH);
+    system("clear");
     //cout << p << endl;
     
   }
