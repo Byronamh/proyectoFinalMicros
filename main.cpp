@@ -4,8 +4,6 @@
 
 #include <cstdlib>
 
-#include <unistd.h>
-
 #include "sensores.h"
 
 //dev added
@@ -25,8 +23,6 @@
 #define GREFRESH 1  //global refresh rate
 
 #define CREFRESH 3 	//chart refresh rate
-
-#define SLEEPTIME 1
 
 bool end = false;
 float temp = 0;
@@ -183,13 +179,15 @@ int main(int argc, char* argv[]) {
     
 
   }
+}
+/*
   void *thread_function_print(void* argument){
 
 
 
   while (!end) {
 
-    actualizar();
+  
 
 
 
@@ -209,6 +207,6 @@ int main(int argc, char* argv[]) {
 
 }
 
-
+*/
 
 // print progress
