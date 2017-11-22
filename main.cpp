@@ -15,9 +15,8 @@
 #include <wiringPiI2C.h>
 #include "bme280.h"
 #include <pthread.h>
-#include "sensor.h"
+#include "sensores.h"
 #include <unistd.h>
-#include <curses.h>
 #include <stdlib.h>
 #include <ctype.h>
 
