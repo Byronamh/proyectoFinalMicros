@@ -18,11 +18,14 @@
 
 #define DATASIZE 30	//data height/ display size
 
-#define GRAPHWIDTH 20	//data height/ display size
+#define GRAPHWIDTH 20	//data width/ display size
+
+#define GRAPHSTEP 5 //yaxis data scale
 
 #define GREFRESH 1  //global refresh rate
 
 #define CREFRESH 3 	//chart refresh rate
+
 
 bool end = false;
 float temp = 0;
@@ -57,8 +60,6 @@ void get_current_stats(){
 
 	cout<<"| Temperatura | Humedad | Presion |"<<endl;
 
-	int temperature = rand() % 1000 + 1;
-
 	cout<<"|";
 
 	cout.width(8);
@@ -81,7 +82,7 @@ void get_current_stats(){
 
 	cout<< getPresion();
 
-	cout.width(4);
+	cout.width(5);
 
 	cout<<"|";
 
@@ -113,7 +114,7 @@ void set_column_height(int col, int key){
 
 void get_graph(int time, int value){
 	cout<<value;
-	set_column_height(value/10, time%DATASIZE);
+	set_column_height(value/GRAPHSTEP, time%DATASIZE);
 
 	
 
