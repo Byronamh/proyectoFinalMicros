@@ -20,12 +20,14 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+using namespace std;
+
+
 char* intprkey(int ch);
 void *thread_function_statuts(void*);
 void *thread_function_print(void*)
 #define SLEEPTIME 1
   
-  bool end = false;
   float temperatura = 0;
   float humedad = 0;
   float presion =0;

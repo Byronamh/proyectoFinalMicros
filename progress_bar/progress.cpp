@@ -54,7 +54,7 @@ void set_column_height(int col, int key){
 void get_graph(int time, int value){
 	set_column_height(value/100, time%DATASIZE);
 	
-	for(int i=0; i<DATASIZE; i++){
+	for(int i=0; i<GRAPHWIDTH; i++){
 		for(int j=0; j<DATASIZE; j++){
 		cout<<chartdata[i][j]<<" ";
 		}
