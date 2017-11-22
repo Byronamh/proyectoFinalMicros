@@ -112,8 +112,8 @@ void set_column_height(int col, int key){
 
 
 void get_graph(int time, int value){
-
-	set_column_height(value/100, time%DATASIZE);
+	cout<<value;
+	set_column_height(value/10, time%DATASIZE);
 
 	
 
