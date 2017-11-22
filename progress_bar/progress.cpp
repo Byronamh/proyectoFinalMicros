@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #define DATASIZE 10	//data height/ display size
+#define GRAPHWIDTH 20	//data height/ display size
 #define GREFRESH 1  //global refresh rate
 #define CREFRESH 3 	//chart refresh rate
 
@@ -16,7 +17,7 @@ using namespace std;
 
 int time_ticks = 0;
 int avg_temp, avg_moist, avg_pres;
-char chartdata [20][DATASIZE];
+char chartdata [GRAPHWIDTH][DATASIZE];
 const char block = 'x';
 
 //print current temp, humidiry and pressure
@@ -42,7 +43,7 @@ void get_current_stats(){
 //set column height value
 void set_column_height(int col, int key){
 	for (int i=0; i<DATASIZE; i++){
-		chartdata[i][key]=0;
+		chartdata[i][key]='.';
 	}
 	for (int i=DATASIZE-col; i<DATASIZE; i++){
 		chartdata[i][key]=block;
@@ -77,7 +78,9 @@ int main(int argc, char* argv[]) {
 	get_current_stats();
 	cout<<"\nDatos Historicos:"<<endl;
 	//print graph
-	get_graph(i, rand() % 1000 + 1);
+	if(i%CREFRESH){
+		get_graph(i, rand() % 1000 + 1);
+	}
 	sleep(GREFRESH);
     system("clear");
     //cout << p << endl;
