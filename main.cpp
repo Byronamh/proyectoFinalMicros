@@ -1,63 +1,214 @@
-// Universidad del Valle de Guatemala
-// CC3056
-// Christian Medina
-// Ana lucia Diaz y Byron Mota
-// compile with:
-// g++ main.cpp bme280.cpp bme280.h -lwiringPi -o bme280
-
+#include <string>
 
 #include <iostream>
-#include <stdio.h>
-#include <errno.h>
-#include <stdint.h>
-#include <time.h>
-#include <math.h>
-#include <wiringPiI2C.h>
-#include "bme280.h"
-#include <pthread.h>
-#include "sensores.h"
+
+#include <cstdlib>
+
 #include <unistd.h>
+
+#include "sensores.h"
+
+//dev added
+
 #include <stdlib.h>
-#include <ctype.h>
+
+#include <unistd.h>
+
+#include <pthread.h>
+
+
+
+#define DATASIZE 30	//data height/ display size
+
+#define GRAPHWIDTH 20	//data height/ display size
+
+#define GREFRESH 1  //global refresh rate
+
+#define CREFRESH 3 	//chart refresh rate
+
+#define SLEEPTIME 1
+
+bool end = false;
+float temp = 0;
+float hume = 0;
+float pres = 0;
+
+pthread_mutex_t lock;
+
+
+
+
 
 using namespace std;
 
 
-char* intprkey(int ch);
-void *thread_function_statuts(void*);
-void *thread_function_print(void*)
-#define SLEEPTIME 1
-  
-  float temperatura = 0;
-  float humedad = 0;
-  float presion =0;
-  pthread_mutex_t lock;
 
-int main(int argv, char* argc[]){
-  int fd = wiringPiI2CSetup(BME280_ADDRESS);
-  
-  if(fd < 0){
-    printf("Device not found");
-    return -1;
-  }
+int time_ticks = 0;
 
-  bme280_calib_data cal;
-  readCalibrationData(fd, &cal);
+int avg_temp, avg_moist, avg_pres;
 
-  wiringPiI2CWriteReg8(fd, 0xf2, 0x01);   // humidity oversampling x 1
-  wiringPiI2CWriteReg8(fd, 0xf4, 0x25);   // pressure and temperature oversampling x 1, mode normal
+char chartdata [GRAPHWIDTH][DATASIZE];
 
-  bme280_raw_data raw;
-  getRawData(fd, &raw);
+const char block = 'x';
 
-  int32_t t_fine = getTemperatureCalibration(&cal, raw.temperature);
 
-  float t = compensateTemperature(t_fine); // C
-  float p = compensatePressure(raw.pressure, &cal, t_fine) / 100; // hPa
-  float h = compensateHumidity(raw.humidity, &cal, t_fine);       // %
-  float a = getAltitude(p);                         // meters
-  
-  // output data to screen
-  cout<<t<<"\t"<<p<<"\t"<<h<<endl;
-  return 0;
+
+//print current temp, humidiry and pressure
+
+void get_current_stats(){
+
+	
+
+	cout<<"| Temperatura | Humedad | Presion |"<<endl;
+
+	int temperature = rand() % 1000 + 1;
+
+	cout<<"|";
+
+	cout.width(8);
+
+    cout<< getTemperatura();//todo: get temperatura
+
+    cout.width(6);
+
+	cout<<"|";
+
+	cout.width(6);
+
+	cout<< rand() % 30 + 1;//todo: get humedad
+
+	cout.width(4);
+
+	cout<<"|";
+
+	cout.width(6);
+
+	cout<< rand() % 50 + 1;//todo: get presion
+
+	cout.width(4);
+
+	cout<<"|";
+
 }
+
+
+
+//set column height value
+
+void set_column_height(int col, int key){
+
+	for (int i=0; i<DATASIZE; i++){
+
+		chartdata[i][key]='.';
+
+	}
+
+	for (int i=DATASIZE-col; i<DATASIZE; i++){
+
+		chartdata[i][key]=block;
+
+	}
+
+}
+
+
+
+
+
+void get_graph(int time, int value){
+
+	set_column_height(value/100, time%DATASIZE);
+
+	
+
+	for(int i=0; i<GRAPHWIDTH; i++){
+
+		for(int j=0; j<DATASIZE; j++){
+
+		cout<<chartdata[i][j]<<" ";
+
+		}
+
+		cout<<"\n";
+
+	}
+
+
+
+}
+
+
+
+int main(int argc, char* argv[]) {
+
+	//set array to 0
+  pthread_mutex_init(&lock, NULL);
+  
+	for(int i=0; i< DATASIZE; i++){
+
+		for(int j=0; j<DATASIZE; j++){
+
+			chartdata[i][j]=0;
+
+		}
+
+	}
+
+
+
+  int N = 100;
+
+	
+
+  for(int i = 0; i < N; i++) {
+
+    // compute percentage
+
+    cout<<"Datos Actuales :"<<endl;
+
+	get_current_stats();
+
+	cout<<"\nDatos Historicos:"<<endl;
+
+	//print graph
+
+	get_graph(i, rand()%1000+1);
+
+	sleep(GREFRESH);
+
+    system("clear");
+
+    //cout << p << endl;
+
+    
+
+  }
+  void *thread_function_print(void* argument){
+
+
+
+  while (!end) {
+
+    actualizar();
+
+
+
+	pthread_mutex_lock(&lock);
+
+	float tempToPrint = temp;
+
+	float presToPrint = pres;
+
+	float humeToPrint = hume;
+
+	pthread_mutex_unlock(&lock);
+
+
+
+  return 0;
+
+}
+
+
+
+// print progress
