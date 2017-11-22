@@ -2,7 +2,7 @@
 
 #include "bme280.h"
 
-#include "sensor.h"
+#include "sensores.h"
 
 #include <time.h>
 
