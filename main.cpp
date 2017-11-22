@@ -117,7 +117,7 @@ void get_graph(int time, int value){
 
 	
 
-	for(int i=0; i<GRAPHWIDTH; i++){
+	for(int i=0; i<DATASIZE; i++){
 
 		for(int j=0; j<DATASIZE; j++){
 
@@ -128,9 +128,6 @@ void get_graph(int time, int value){
 		cout<<"\n";
 
 	}
-
-
-
 }
 
 
@@ -168,7 +165,7 @@ int main(int argc, char* argv[]) {
 
 	//print graph
 
-	get_graph(i, floor(getTemperatura())%1000+1);
+	get_graph(i%DATASIZE,(int) floor(getTemperatura())%1000+1);
 
 	sleep(GREFRESH);
 
