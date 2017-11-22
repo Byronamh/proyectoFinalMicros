@@ -152,7 +152,7 @@ int main(int argc, char* argv[]) {
   int N = 100;
 
 	
-
+	int i=0;
   while(true){
 
     // compute percentage
@@ -172,7 +172,7 @@ int main(int argc, char* argv[]) {
     system("clear");
 
     //cout << p << endl;
-
+	i++;
     
 
   }
