@@ -17,24 +17,24 @@
 // se baso en https://github.com/mozilla-b2g/android-device-crespo/blob/master/libsensors/sensors.cpp
 float getPresion(){
 	//del dato obtenido de Christian en la funcion de read calibration
-    int fd = wiringPiI2CSetup(BME280_ADDRESS); //el fd, BM...
+    	int fd = wiringPiI2CSetup(BME280_ADDRESS); //el fd, BM...
 	bme280_calib_data cal;
 	readCalibrationData(fd, &cal); //por los parametros obtenidos del anterior
-	wiringPiI2CWriteReg8(fd, 0xf4, 0x25); //del wiringPiI2CRReadReg16   
-    getRawData(fd, &raw);
+	wiringPiI2CWriteReg8(fd, 0xf4, 0x25); //del wiringPiI2CRReadReg16
 	bme280_raw_data raw;
+    	getRawData(fd, &raw);
 	int32_t t_fine = getTemperatureCalibration(&cal, raw.temperature); //primer parametro del compensate pressure
 	float presion = compensatePressure(raw.pressure, &cal, t_fine) / 100;  //
 	return presion;
 }
 
 float getTemperatura(){
-	int fd = wiringPiI2CSetup(BME280_ADDRESS); //mismo proceso que el anterior
+	int fd = wiringPiI2CSetup(BME280_ADDRESS);
 	bme280_calib_data cal;
 	readCalibrationData(fd, &cal);
-	wiringPiI2CWriteReg8(fd, 0xf4, 0x25);
-	getRawData(fd, &raw);   
+	wiringPiI2CWriteReg8(fd, 0xf4, 0x25);   // pressure and temperature oversampling x 1, mode normal
 	bme280_raw_data raw;
+	getRawData(fd, &raw);
 	int32_t t_fine = getTemperatureCalibration(&cal, raw.temperature);
 	float temperatura = compensateTemperature(t_fine); // C
 	return temperatura;
@@ -48,8 +48,8 @@ float getHumedad(){
 	bme280_calib_data cal;
 	readCalibrationData(fd, &cal);
 	wiringPiI2CWriteReg8(fd, 0xf2, 0x01);
-	getRawData(fd, &raw);   
 	bme280_raw_data raw;
+	getRawData(fd, &raw); 
 	int32_t t_fine = getTemperatureCalibration(&cal, raw.temperature);
 	float humedad = compensateHumidity(raw.humidity, &cal, t_fine); 
 	return humedad;
